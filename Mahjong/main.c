@@ -9,17 +9,43 @@ bool Analyze(int [], bool);
 int main()
 {
     int allPai[4][10]={
-                        {14,3,2,3,2,4,0,0,0,0},  //万
+                        {13,3,2,3,2,3,0,0,0,0},  //万
                         {0,0,0,0,0,0,0,0,0,0},  //筒
                         {0,0,0,0,0,0,0,0,0,0},  //条
                         {0,0,0,0,0,0,0,0},  //字
                         };
 
-    if(Win(allPai)){
-        printf("Hu!\n");
-    } else {
-        printf("Not Hu!\n");
+    for (int i = 0; i < 4; ++i){
+        if(i!=3){
+            allPai[i][0]++;
+            for (int j = 1; j < 10; ++j){
+                if(allPai[i][j]==4){
+                    continue;
+                }
+                allPai[i][j]++;
+                if(Win(allPai)){
+                    printf("%d-%d\n",j,i);
+                }
+                allPai[i][j]--;
+            }
+            allPai[i][0]--;
+        } else {
+            allPai[i][0]++;
+            for (int j = 1; j < 8; ++j){
+                if(allPai[i][j]==4){
+                    continue;
+                }
+                allPai[i][j]++;
+                if(Win(allPai)){
+                    printf("%d-%d\n",j,i);
+                }
+                allPai[i][j]--;
+            }
+            allPai[i][0]--;
+        }
     }
+
+
     return 0;
 }
 
@@ -28,6 +54,7 @@ bool Win (int allPai[4][10]) {
     int jiangPos;//“将”的位置
     int yuShu;//余数
     bool jiangExisted=false;
+
     //是否满足3，3，3，3，2模型
     int i;
     for(i=0;i<4;i++) {
@@ -43,6 +70,8 @@ bool Win (int allPai[4][10]) {
             jiangExisted=true;
         }
     }
+
+    //判断不含将牌的花色是否符合胡牌条件
     for(i=0;i<4;i++) {
         if (i!=jiangPos){
             if (!Analyze(allPai[i],i==3)){
@@ -50,6 +79,7 @@ bool Win (int allPai[4][10]) {
             }
         }
     }
+
     //该类牌中要包含将，因为要对将进行轮询，效率较低，放在最后
     bool success=false;//指示除掉“将”后能否通过
 

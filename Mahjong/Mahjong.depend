@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1508922753 source:c:\users\wy\onedrive\mahjong\mahjong\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<stdbool.h>
+
